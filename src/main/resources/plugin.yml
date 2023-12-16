@@ -1,0 +1,6 @@
+name: h0t_quests
+version: '${project.version}'
+main: org.h0tkinss.h0t_quests.H0t_quests
+api-version: '1.19'
+depend:
+  - Quests
