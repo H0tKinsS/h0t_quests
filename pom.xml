@@ -62,6 +62,35 @@
             <id>repo.leonardobishop.com</id>
             <url>https://repo.leonardobishop.com/releases/</url>
         </repository>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>sk89q-repo</id>
+            <url>https://maven.enginehub.org/repo/</url>
+        </repository>
+        <repository>
+            <id>CodeMC</id>
+            <url>https://repo.codemc.org/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>hazebyte</id>
+            <url>https://m2.hazebyte.com/repository/maven_releases/</url>
+        </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+        <repository>
+            <id>aestrus-releases</id>
+            <name>Aestrus's Repository</name>
+            <url>https://maven.aestrus.io/releases</url>
+        </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -77,5 +106,85 @@
             <version>3.14.2</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>fr.xephi</groupId>
+            <artifactId>authme</artifactId>
+            <version>5.6.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+            <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
+            <version>7.0.8</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.NoChance.PvPManager</groupId>
+            <artifactId>pvpmanager</artifactId>
+            <version>3.12.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.hazebyte</groupId>
+            <artifactId>CrateReloadedAPI</artifactId>
+            <version>2.2.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.revivalo</groupId>
+            <artifactId>DailyRewards</artifactId>
+            <version>1.8.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/DailyReward-1.8.7.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>me.gethertv</groupId>
+            <artifactId>getAfkZone</artifactId>
+            <version>1.0.6</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/getAfkZone-1.0.6.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Zrips</groupId>
+            <artifactId>Jobs</artifactId>
+            <version>v4.17.2</version> <!-- Change the LATEST to the current version of jobs -->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>dev.espi</groupId>
+            <artifactId>protectionstones</artifactId>
+            <version>2.10.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.playavalon</groupId>
+            <artifactId>MythicDungeons</artifactId>
+            <version>1.3.0-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>4.14.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.11.5</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>dev.nsider</groupId>-->
+<!--            <artifactId>ChatGames</artifactId>-->
+<!--            <version>1.2.0</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${project.basedir}/libs/ChatGames-v1.2.0.jar</systemPath>-->
+<!--        </dependency>-->
     </dependencies>
 </project>

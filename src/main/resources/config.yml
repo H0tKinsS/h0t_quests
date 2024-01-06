@@ -1,0 +1,43 @@
+#Time to greet new player in seconds
+time-for-greet: 10
+
+greet-valid-words:
+  - "siema"
+  - "siemka"
+  - "siemano"
+  - "siemanko"
+  - "elo"
+  - "witam"
+  - "witaj"
+  - "jak tam"
+  - "czesc"
+  - "cześć"
+  - "czesć"
+  - "cześc"
+  - "witamy"
+  - "hej"
+new-player-message: "Przywitajcie nowego gracza %player%"
+greeter-message: "Przywitałeś nowego gracza, otrzymujesz nagrodę!"
+#%player% for player
+commands:
+  - "cr give to %player% zwykla 1"
+  - "eco give %player% 30"
+
+
+podpisy-date-format: "dd.MM.YYYY HH:mm"
+podpisy-blacklist:
+  - ANY_SWORD
+  - BOW
+  - CROSSBOW
+  - ANY_AMOUR
+podpisy:
+  default:
+    display_name: "<grey>Podpis %player_name%"
+    cost: 200
+    lore:
+      - "<grey>%server_time_dd.MM.YYYY HH:mm%"
+  gold:
+    display_name: "<gradient:white:yellow:gold>ツ Podpis %player_name% ツ</gradient>"
+    cost: 200
+    lore:
+      - "<grey>%server_time_dd.MM.YYYY HH:mm%"

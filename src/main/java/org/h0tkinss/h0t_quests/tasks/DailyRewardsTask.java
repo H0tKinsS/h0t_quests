@@ -7,25 +7,28 @@ import com.leonardobishop.quests.common.player.QPlayer;
 import com.leonardobishop.quests.common.player.questprogressfile.TaskProgress;
 import com.leonardobishop.quests.common.quest.Quest;
 import com.leonardobishop.quests.common.quest.Task;
+import dev.revivalo.dailyrewards.api.events.PlayerClaimRewardEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.h0tkinss.h0t_quests.H0t_quests;
-import org.h0tkinss.h0t_quests.event.PlayerGreetEvent;
 
 import java.util.UUID;
 
-public class GreetPlayersCustomTask extends BukkitTaskType {
+public class DailyRewardsTask extends BukkitTaskType {
     private final H0t_quests plugin;
-    public GreetPlayersCustomTask(H0t_quests plugin) {
-        super("greetplayer", "h0tkinss", "Greet new players");
+
+    public DailyRewardsTask(H0t_quests plugin) {
+        super("dailyrewards", "h0tkinss", "Claim daily rewards");
         this.plugin = plugin;
         super.addConfigValidator(TaskUtils.useIntegerConfigValidator(this, "amount"));
+        super.addConfigValidator(TaskUtils.useRequiredConfigValidator(this, "name"));
     }
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerGreetTask(PlayerGreetEvent e) {
-        Player player = e.getGreeter();
+    public void onPlayerDailyRewardReceive(PlayerClaimRewardEvent e) {
+        Player player = e.getClaimer();
         UUID playerId = player.getUniqueId();
         if (player.hasMetadata("NPC")) {
             return;
@@ -42,10 +45,12 @@ public class GreetPlayersCustomTask extends BukkitTaskType {
             Task task = pendingTask.task();
             TaskProgress taskProgress = pendingTask.taskProgress();
 
-            super.debug(player.getName() + " greeted a player!", quest.getId(), task.getId(), playerId);
+            super.debug(player.getName() + " opened a crate!", quest.getId(), task.getId(), playerId);
 
             int amount = (int) task.getConfigValue("amount");
-
+            String type = (String) task.getConfigValue("name");
+            if(!e.getClaimedReward().toString().equalsIgnoreCase(type)) continue;
+            //if (!e.getCrate().getCrateName().equalsIgnoreCase(crate_name)) return;
             int progress = TaskUtils.getIntegerTaskProgress(taskProgress);
             int newProgress = progress + 1;
             taskProgress.setProgress(newProgress);
@@ -58,5 +63,4 @@ public class GreetPlayersCustomTask extends BukkitTaskType {
             }
         }
     }
-
 }

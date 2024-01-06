@@ -7,25 +7,26 @@ import com.leonardobishop.quests.common.player.QPlayer;
 import com.leonardobishop.quests.common.player.questprogressfile.TaskProgress;
 import com.leonardobishop.quests.common.quest.Quest;
 import com.leonardobishop.quests.common.quest.Task;
+import dev.espi.protectionstones.event.PSCreateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.h0tkinss.h0t_quests.H0t_quests;
-import org.h0tkinss.h0t_quests.event.PlayerGreetEvent;
 
 import java.util.UUID;
 
-public class GreetPlayersCustomTask extends BukkitTaskType {
+public class ProtectionStonesCreateTask extends BukkitTaskType {
     private final H0t_quests plugin;
-    public GreetPlayersCustomTask(H0t_quests plugin) {
-        super("greetplayer", "h0tkinss", "Greet new players");
+
+    public ProtectionStonesCreateTask(H0t_quests plugin) {
+        super("pscreate", "h0tkinss", "ProtectionStones create task");
         this.plugin = plugin;
-        super.addConfigValidator(TaskUtils.useIntegerConfigValidator(this, "amount"));
+        super.addConfigValidator(TaskUtils.useRequiredConfigValidator(this, "name"));
     }
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerGreetTask(PlayerGreetEvent e) {
-        Player player = e.getGreeter();
+
+    @EventHandler
+    public void onJobsRebornPlayerLvlUp(PSCreateEvent e) {
+        Player player = e.getPlayer();
         UUID playerId = player.getUniqueId();
         if (player.hasMetadata("NPC")) {
             return;
@@ -36,27 +37,17 @@ public class GreetPlayersCustomTask extends BukkitTaskType {
         if (qPlayer == null) {
             return;
         }
-
         for (TaskUtils.PendingTask pendingTask : TaskUtils.getApplicableTasks(player, qPlayer, this)) {
             Quest quest = pendingTask.quest();
             Task task = pendingTask.task();
             TaskProgress taskProgress = pendingTask.taskProgress();
 
-            super.debug(player.getName() + " greeted a player!", quest.getId(), task.getId(), playerId);
+            super.debug(player.getName() + " leveled up ", quest.getId(), task.getId(), playerId);
 
-            int amount = (int) task.getConfigValue("amount");
-
-            int progress = TaskUtils.getIntegerTaskProgress(taskProgress);
-            int newProgress = progress + 1;
-            taskProgress.setProgress(newProgress);
-            super.debug("Updating task progress (now " + newProgress + ")", quest.getId(), task.getId(), playerId);
-
-            if (newProgress >= amount) {
-                super.debug("Marking task as complete", quest.getId(), task.getId(), playerId);
-                taskProgress.setProgress(amount);
-                taskProgress.setCompleted(true);
-            }
+            String type = (String) task.getConfigValue("name");
+            //if (!e.getCrate().getCrateName().equalsIgnoreCase(crate_name)) return;
+            super.debug("Completing task", quest.getId(), task.getId(), playerId);
+            taskProgress.setCompleted(true);
         }
     }
-
 }

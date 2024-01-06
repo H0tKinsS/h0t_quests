@@ -4,3 +4,18 @@ main: org.h0tkinss.h0t_quests.H0t_quests
 api-version: '1.19'
 depend:
   - Quests
+  - getAfkZone
+  - DailyRewards
+  - CrateReloaded
+softdepend:
+  - Jobs
+  - MythicDungeons
+commands:
+  podpis:
+    description: Podpisz swój przedmiot
+    usage: /<command>
+    permission: podpis.use
+  h0t_quests:
+    description: Plugin command
+    usage: /<command>
+    permission: h0t_quests.admin
