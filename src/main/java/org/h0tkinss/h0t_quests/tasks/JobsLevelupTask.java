@@ -16,11 +16,9 @@ import org.h0tkinss.h0t_quests.H0t_quests;
 import java.util.UUID;
 
 public class JobsLevelupTask extends BukkitTaskType {
-    private final H0t_quests plugin;
 
     public JobsLevelupTask(H0t_quests plugin) {
         super("jobsrebornlvl", "h0tkinss", "JobsReborn levelup task");
-        this.plugin = plugin;
         super.addConfigValidator(TaskUtils.useIntegerConfigValidator(this, "amount"));
         super.addConfigValidator(TaskUtils.useRequiredConfigValidator(this, "name"));
     }
@@ -34,6 +32,7 @@ public class JobsLevelupTask extends BukkitTaskType {
         }
         BukkitQuestsPlugin questsPlugin = (BukkitQuestsPlugin) Bukkit.getPluginManager().getPlugin("Quests");
 
+        assert questsPlugin != null;
         QPlayer qPlayer = questsPlugin.getPlayerManager().getPlayer(playerId);
         if (qPlayer == null) {
             return;
@@ -48,15 +47,11 @@ public class JobsLevelupTask extends BukkitTaskType {
             int amount = (int) task.getConfigValue("amount");
             String type = (String) task.getConfigValue("name");
             if(!e.getJob().getName().equalsIgnoreCase(type)) continue;
-            //if (!e.getCrate().getCrateName().equalsIgnoreCase(crate_name)) return;
-            int progress = TaskUtils.getIntegerTaskProgress(taskProgress);
-            int newProgress = progress + 1;
-            taskProgress.setProgress(newProgress);
-            super.debug("Updating task progress (now " + newProgress + ")", quest.getId(), task.getId(), playerId);
-
-            if (newProgress >= amount) {
+            int level = e.getLevel();
+            super.debug("Updating task progress (now " + level + ")", quest.getId(), task.getId(), playerId);
+            taskProgress.setProgress(level);
+            if (level >= amount) {
                 super.debug("Marking task as complete", quest.getId(), task.getId(), playerId);
-                taskProgress.setProgress(amount);
                 taskProgress.setCompleted(true);
             }
         }

@@ -9,6 +9,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.h0tkinss.h0t_quests.cmd.ReloadCommand;
@@ -23,6 +24,13 @@ import org.h0tkinss.h0t_quests.tasks.*;
 public final class H0t_quests extends JavaPlugin {
 
     private static Economy econ = null;
+
+    public static H0t_quests getInstance() {
+        return plugin;
+    }
+
+    private static H0t_quests plugin;
+    Plugin executableItems;
     private static Permission perms = null;
     private static Chat chat = null;
     public FileConfiguration config = getConfig();
@@ -40,6 +48,7 @@ public final class H0t_quests extends JavaPlugin {
     }
     private QPlayerManager qPlayerManager;
     private static GreetManager greetManager;
+    private static SignatureManager signatureManager;
 
     private PvPManager pvpmanager;
     public PvPManager getPvpmanager(){
@@ -48,8 +57,12 @@ public final class H0t_quests extends JavaPlugin {
     public GreetManager getGreetManager(){
         return greetManager;
     }
+    public SignatureManager getSignatureManager(){
+        return signatureManager;
+    }
     @Override
     public void onEnable() {
+        plugin = this;
         this.saveDefaultConfig();
         /*Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
@@ -66,6 +79,7 @@ public final class H0t_quests extends JavaPlugin {
             }
         }, 0, 3 * 20);*/
         greetManager = new GreetManager(this);
+        signatureManager = new SignatureManager(this);
         if (!setupEconomy() ) {
             getLogger().severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
@@ -76,10 +90,12 @@ public final class H0t_quests extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("PvPManager"))
             pvpmanager = (PvPManager) Bukkit.getPluginManager().getPlugin("PvPManager");
 
-
         Quests questsPlugin = (Quests) Bukkit.getPluginManager().getPlugin("Quests");
         BukkitTaskTypeManager taskTypeManager = (BukkitTaskTypeManager) questsPlugin.getTaskTypeManager();
-
+        if(Bukkit.getPluginManager().isPluginEnabled("ExecutableItems")) {
+            executableItems = Bukkit.getPluginManager().getPlugin("ExecutableItems");
+            Bukkit.getLogger().info("ExecutableItems hooked !");
+        }
 
         MythicDungeonsCompleteTask mythicDungeonsCompleteTask = new MythicDungeonsCompleteTask(this);
         ProtectionStonesCreateTask protectionStonesCreateTask = new ProtectionStonesCreateTask(this);
